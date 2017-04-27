@@ -1,0 +1,36 @@
+<div class="card card-block text-xs-center">
+  <h3>Order Summary</h3>
+</div>
+
+<% if @order_items.size == 0 %>
+  <h4>Oops. Nothing here!</h4>
+  <p class="text-center">
+    There are no items in your order.  Please <%= link_to "go back to menu", menu_path %> and order food.
+  </p>
+<% else %>
+  <% @order_items.each do |order_item| %>
+    <%= render 'order_items/show', food_item: order_item.food_item, order_item: order_item %>
+  <% end %>
+  <div class="text-xs-right">
+    <h4>Total: <%= current_order.subtotal %></h4>
+  </div>
+  <%= form_tag("/order_submitted", method: "post") do %>
+    <fieldset class="form-group">
+      <%= label_tag(:name, "Your name:") %>
+      <%= text_field_tag(:name, "" ,class: "form-control", required: true) %>
+    </fieldset>
+    <fieldset class="form-group">
+      <%= label_tag(:phone, "Phone number:") %>
+      <%= text_field_tag(:phone, "", class: "form-control", required: true) %>
+    </fieldset>
+    <fieldset class="form-group">
+      <%= label_tag(:email, "Email address:") %>
+      <%= text_field_tag(:email, "", class: "form-control", required: true) %>
+    </fieldset>
+    <fieldset class="form-group">
+      <%= label_tag(:address, "Address:") %>
+      <%= text_area_tag(:address, "", class: "form-control", required: true) %>
+    </fieldset>
+    <%= submit_tag("Submit the order") %>
+  <% end %>
+<% end %>

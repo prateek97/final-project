@@ -1,0 +1,27 @@
+<div class="row food_item_row">
+  <!--This part show food name and description-->
+  <div class="col-md-6">
+    <a type="button"  data-toggle="modal" data-target="#gridSystemModal<%= food_item.id %>">
+      <h3><%= food_item.name %> </h3>
+    </a>
+    <h5><small><%= food_item.description %></small></h5>
+  </div>
+   <!--This part show price of food-->
+  <div class="col-md-3">
+    <h5 class="text-right"><span style="color: green"><%= number_to_currency food_item.price %></span></h5>
+  </div>
+  
+  <!--This part show button to add item to order-->
+  <div class="col-md-3">
+    <%= form_for order_item do |f| %>
+      <div class="input-group">
+        <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
+        <div class="input-group-btn">
+          <%= f.hidden_field :food_item_id, value: food_item.id %>
+          <%= f.submit "Add to Order", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
